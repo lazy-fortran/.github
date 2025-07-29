@@ -5,7 +5,7 @@
 
 ### Toolchain Overview
 
-The *lazy fortran* toolchain splits work across several packages: fortfront, fluff, ffc, fortad, fortrun, and fortnb — each focused on a clear purpose. This keeps code organized, dependencies minimal, and interfaces straightforward.
+The *lazy fortran* toolchain splits work across several packages: fortfront, fluff, ffc, fad, fortrun, and fnb — each focused on a clear purpose. This keeps code organized, dependencies minimal, and interfaces straightforward.
 
 ---
 
@@ -79,7 +79,7 @@ The *lazy fortran* toolchain splits work across several packages: fortfront, flu
 
 ---
 
-#### 4. fortad
+#### 4. fad
 
 **Purpose:** Automatic differentiation.
 
@@ -124,7 +124,7 @@ The *lazy fortran* toolchain splits work across several packages: fortfront, flu
 
 ---
 
-#### 6. fortnb
+#### 6. fnb
 
 **Purpose:** Notebook interface for Standard Fortran and *lazy fortran*.
 
@@ -143,7 +143,7 @@ The *lazy fortran* toolchain splits work across several packages: fortfront, flu
 - fortrun for running notebook cells and managing cache
 - fluff CLI for formatting and standardization (optional)
 
-The *lazy fortran* toolchain splits work across several packages: fortfront, fluff, ffc, fortad, fortrun, and fortnb — each focused on a clear purpose. This keeps code organized, dependencies minimal, and interfaces straightforward.
+The *lazy fortran* toolchain splits work across several packages: fortfront, fluff, ffc, fad, fortrun, and fnb — each focused on a clear purpose. This keeps code organized, dependencies minimal, and interfaces straightforward.
 
 
 ### Packages for Scientific Computing
