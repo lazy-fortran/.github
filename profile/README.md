@@ -5,7 +5,7 @@
 
 ### Toolchain Overview
 
-The *lazy fortran* toolchain splits work across several packages: fortfront, fluff, fortc, fortad, fortrun, and fortnb — each focused on a clear purpose. This keeps code organized, dependencies minimal, and interfaces straightforward.
+The *lazy fortran* toolchain splits work across several packages: fortfront, fluff, ffc, fortad, fortrun, and fortnb — each focused on a clear purpose. This keeps code organized, dependencies minimal, and interfaces straightforward.
 
 ---
 
@@ -58,7 +58,7 @@ The *lazy fortran* toolchain splits work across several packages: fortfront, flu
 
 ---
 
-#### 3. fortc
+#### 3. ffc
 
 **Purpose:** Full compilation backend.
 
@@ -87,7 +87,7 @@ The *lazy fortran* toolchain splits work across several packages: fortfront, flu
 
 - Supports `!$ad` annotations to mark functions/subroutines for differentiation
 - Integrates with Enzyme at the IR level during compilation
-- Works with any Enzyme-enabled compiler (fortc, Flang, etc.)
+- Works with any Enzyme-enabled compiler (ffc, Flang, etc.)
 - Details of IR integration to be defined
 
 **Interfaces:** Exposes compiler flags or annotations to enable AD on marked routines.
@@ -97,7 +97,7 @@ The *lazy fortran* toolchain splits work across several packages: fortfront, flu
 **Dependencies:**
 
 - fortfront for AST and semantic info
-- Any Enzyme-enabled Fortran compiler (fortc, Flang, LFortran, etc.)
+- Any Enzyme-enabled Fortran compiler (ffc, Flang, LFortran, etc.)
 
 ---
 
@@ -143,7 +143,7 @@ The *lazy fortran* toolchain splits work across several packages: fortfront, flu
 - fortrun for running notebook cells and managing cache
 - fluff CLI for formatting and standardization (optional)
 
-The *lazy fortran* toolchain splits work across several packages: fortfront, fluff, fortc, fortad, fortrun, and fortnb — each focused on a clear purpose. This keeps code organized, dependencies minimal, and interfaces straightforward.
+The *lazy fortran* toolchain splits work across several packages: fortfront, fluff, ffc, fortad, fortrun, and fortnb — each focused on a clear purpose. This keeps code organized, dependencies minimal, and interfaces straightforward.
 
 
 ### Packages for Scientific Computing
