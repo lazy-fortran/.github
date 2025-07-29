@@ -1,6 +1,6 @@
 ## Architecture Overview
 
-The *lazy fortran* toolchain splits work across three packages—fortfront, fluff, fortrun, fortc, and fortad — each focused on a clear purpose. This keeps code organized, dependencies minimal, and interfaces straightforward.
+The *lazy fortran* toolchain splits work across several packages: fortfront, fluff, fortc, fortad, fortrun, and fortnb — each focused on a clear purpose. This keeps code organized, dependencies minimal, and interfaces straightforward.
 
 ---
 
