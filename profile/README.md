@@ -41,7 +41,9 @@ The *lazy fortran* toolchain splits work across three packages—fortfront, fluf
 
 **Interfaces:** Provides CLI subcommands for formatting, standardization, and linting — all with optional JSON output.
 
-**Dependencies:**\* fortfront only
+**Dependencies:**
+
+- fortfront only
 
 ---
 
@@ -56,35 +58,14 @@ The *lazy fortran* toolchain splits work across three packages—fortfront, fluf
 
 **Interfaces:** Offers a compiler CLI to produce object code.
 
-**Dependencies:**\*\*\*
+**Dependencies:**
 
 - fortfront for typed AST
 - LLVM/MLIR libraries
 
 ---
 
-### 4. fortrun
-
-**Purpose:** Code runner and package manager.
-
-**Features:**
-
-- Depends on fluff and FPM (Fortran Package Manager)
-- Executes *lazy fortran* or Standard Fortran applications
-- Global source and object cache for rapid incremental builds and runs
-- Manages dependencies, project layout, and environments (inspired by Go, Rust, Julia, Python)
-
-**Interfaces:** Provides high-level run and build commands for development workflows.
-
-**Dependencies:**\*
-
-- fluff for parsing, analysis, formatting, and standardization
-- FPM for package resolution and build metadata
-- Any supported Fortran compiler
-
----
-
-### 5. fortad
+### 4. fortad
 
 **Purpose:** Automatic differentiation.
 
@@ -103,3 +84,41 @@ The *lazy fortran* toolchain splits work across three packages—fortfront, fluf
 - fortc or Flang with Enzyme support
 
 ---
+
+### 5. fortrun
+
+**Purpose:** Code runner and package manager.
+
+**Features:**
+
+- Depends on fluff and FPM (Fortran Package Manager)
+- Executes *lazy fortran* or Standard Fortran applications
+- Global source and object cache for rapid incremental builds and runs
+- Manages dependencies, project layout, and environments (inspired by Go, Rust, Julia, Python)
+
+**Interfaces:** Provides high-level run and build commands for development workflows.
+
+**Dependencies:**
+
+- fluff for parsing, analysis, formatting, and standardization
+- FPM for package resolution and build metadata
+- Any supported Fortran compiler
+
+---
+
+### 6. fortnb
+
+**Purpose:** Notebook interface for Standard Fortran and *lazy fortran*.
+
+**Features:**
+
+- Implements .f and .md files as notebooks similar to jupytext
+- Supports both Standard Fortran and *lazy fortran* syntax
+- Provides export to Markdown and PDF
+
+**Interfaces:** Offers API and CLI to convert notebooks to Markdown or PDF
+
+**Dependencies:**
+
+- fluff for parsing, analysis, formatting, and standardization
+- fortrun for running notebooks and managing cache
