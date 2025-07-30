@@ -55,7 +55,7 @@ The *lazy fortran* toolchain splits work across several packages: fortfront, flu
 
 ---
 
-#### 6. fortnb
+#### fortnb
 
 **Purpose:** Notebook interface for Standard Fortran and *lazy fortran*.
 
@@ -78,7 +78,7 @@ The *lazy fortran* toolchain splits work across several packages: fortfront, flu
 
 ---
 
-#### 3. fortfc
+#### fortfc
 
 **Purpose:** Full compilation backend.
 
@@ -99,7 +99,7 @@ The *lazy fortran* toolchain splits work across several packages: fortfront, flu
 
 ---
 
-#### 4. fortad
+#### fortad
 
 **Purpose:** Automatic differentiation.
 
