@@ -11,7 +11,117 @@ The *lazy fortran* toolchain splits work across several packages: fortfront, flu
 
 ---
 
-#### 1. fortfront
+#### fortrun
+
+**Purpose:** Code runner and package manager.
+
+**Features:**
+
+- Executes *lazy fortran* or Standard Fortran applications
+- Global source and object cache for rapid incremental builds and runs
+- Manages dependencies, project layout, and environments (inspired by Go, Rust, Julia, Python)
+- Provides caching API for other packages
+
+**Interfaces:** Provides high-level run and build commands for development workflows, plus API for cache management.
+
+**Inspired by:** go, julia, lfortran
+
+**Dependencies:**
+
+- fortfront for parsing and analysis
+- FPM for package resolution and build metadata
+- Any supported Fortran compiler
+
+---
+
+#### fluff
+
+**Purpose:** Source-to-source transformations and static checks.
+
+**Features:**
+
+- Source code formatter for *lazy fortran* and Standard Fortran
+- Advanced linting with diagnostics (inspired by Rust analyzer)
+- Static analysis checks and code quality enforcement
+- Code transformations and refactoring suggestions
+
+**Interfaces:** Provides CLI subcommands for formatting, linting, and static analysis.
+
+**Inspired by:** ruff (code formatting and static analysis)
+
+**Dependencies:**
+
+- fortfront only
+
+---
+
+#### 6. fortnb
+
+**Purpose:** Notebook interface for Standard Fortran and *lazy fortran*.
+
+**Features:**
+
+- Implements .f and .md files as notebooks similar to jupytext
+- Supports both Standard Fortran and *lazy fortran* syntax
+- Provides export to Markdown and PDF
+
+**Interfaces:** Offers API and CLI to convert notebooks to Markdown or PDF
+
+**Inspired by:** jupyter, jupytext, weave, blocks (caching runner), lfortran
+
+**Dependencies:**
+
+- fortrun for running notebook cells and managing cache
+- fluff CLI for formatting and standardization (optional)
+
+The *lazy fortran* toolchain splits work across several packages: fortfront, fluff, ffc, fad, fortrun, and fnb — each focused on a clear purpose. This keeps code organized, dependencies minimal, and interfaces straightforward.
+
+---
+
+#### 3. fortfc
+
+**Purpose:** Full compilation backend.
+
+**Features:**
+
+- Lower typed AST to HLFIR (an MLIR dialect)
+- Continue lowering to LLVM IR and produce object code
+- Includes the MLIR backend implementation
+
+**Interfaces:** Offers a compiler CLI to produce object code.
+
+**Inspired by:** flang (HLFIR -> FIR -> LLVM IR or SPIR-V for GPU -> OMP target), lfortran (typed AST -> LLVM IR)
+
+**Dependencies:**
+
+- fortfront for typed AST
+- LLVM/MLIR libraries
+
+---
+
+#### 4. fortad
+
+**Purpose:** Automatic differentiation.
+
+**Features:**
+
+- Supports `!$ad` annotations to mark functions/subroutines for differentiation
+- Integrates with Enzyme at the IR level during compilation
+- Works with any Enzyme-enabled compiler (ffc, Flang, etc.)
+- Details of IR integration to be defined
+
+**Interfaces:** Exposes compiler flags or annotations to enable AD on marked routines.
+
+**Inspired by:** tapenade (decorators, e.g. !$ad mode=reverse)
+
+**Dependencies:**
+
+- fortfront for AST and semantic info
+- Any Enzyme-enabled Fortran compiler (ffc, Flang, LFortran, etc.)
+
+---
+
+#### fortfront
 
 **Purpose:** Core analysis.
 
@@ -37,178 +147,12 @@ The *lazy fortran* toolchain splits work across several packages: fortfront, flu
 
 **Dependencies:** None
 
----
-
-#### 2. fluff
-
-**Purpose:** Source-to-source transformations and static checks.
-
-**Features:**
-
-- Source code formatter for *lazy fortran* and Standard Fortran
-- Advanced linting with diagnostics (inspired by Rust analyzer)
-- Static analysis checks and code quality enforcement
-- Code transformations and refactoring suggestions
-
-**Interfaces:** Provides CLI subcommands for formatting, linting, and static analysis.
-
-**Inspired by:** ruff (code formatting and static analysis)
-
-**Dependencies:**
-
-- fortfront only
-
----
-
-#### 3. ffc
-
-**Purpose:** Full compilation backend.
-
-**Features:**
-
-- Lower typed AST to HLFIR (an MLIR dialect)
-- Continue lowering to LLVM IR and produce object code
-- Includes the MLIR backend implementation
-
-**Interfaces:** Offers a compiler CLI to produce object code.
-
-**Inspired by:** flang (HLFIR -> FIR -> LLVM IR or SPIR-V for GPU -> OMP target), lfortran (typed AST -> LLVM IR)
-
-**Dependencies:**
-
-- fortfront for typed AST
-- LLVM/MLIR libraries
-
----
-
-#### 4. fad
-
-**Purpose:** Automatic differentiation.
-
-**Features:**
-
-- Supports `!$ad` annotations to mark functions/subroutines for differentiation
-- Integrates with Enzyme at the IR level during compilation
-- Works with any Enzyme-enabled compiler (ffc, Flang, etc.)
-- Details of IR integration to be defined
-
-**Interfaces:** Exposes compiler flags or annotations to enable AD on marked routines.
-
-**Inspired by:** tapenade (decorators, e.g. !$ad mode=reverse)
-
-**Dependencies:**
-
-- fortfront for AST and semantic info
-- Any Enzyme-enabled Fortran compiler (ffc, Flang, LFortran, etc.)
-
----
-
-#### 5. fortrun
-
-**Purpose:** Code runner and package manager.
-
-**Features:**
-
-- Executes *lazy fortran* or Standard Fortran applications
-- Global source and object cache for rapid incremental builds and runs
-- Manages dependencies, project layout, and environments (inspired by Go, Rust, Julia, Python)
-- Provides caching API for other packages
-
-**Interfaces:** Provides high-level run and build commands for development workflows, plus API for cache management.
-
-**Inspired by:** go, julia, lfortran
-
-**Dependencies:**
-
-- fortfront for parsing and analysis
-- FPM for package resolution and build metadata
-- Any supported Fortran compiler
-
----
-
-#### 6. fnb
-
-**Purpose:** Notebook interface for Standard Fortran and *lazy fortran*.
-
-**Features:**
-
-- Implements .f and .md files as notebooks similar to jupytext
-- Supports both Standard Fortran and *lazy fortran* syntax
-- Provides export to Markdown and PDF
-
-**Interfaces:** Offers API and CLI to convert notebooks to Markdown or PDF
-
-**Inspired by:** jupyter, jupytext, weave, blocks (caching runner), lfortran
-
-**Dependencies:**
-
-- fortrun for running notebook cells and managing cache
-- fluff CLI for formatting and standardization (optional)
-
-The *lazy fortran* toolchain splits work across several packages: fortfront, fluff, ffc, fad, fortrun, and fnb — each focused on a clear purpose. This keeps code organized, dependencies minimal, and interfaces straightforward.
-
 
 ### Packages for Scientific Computing
 
 ---
 
-#### 1. fortio
-
-**Purpose:** Unified I/O interface for scientific data formats.
-
-**Features:**
-
-- Low-level I/O routines for NetCDF/HDF5, parquet, csv formats under one API
-- Memory-efficient streaming and chunked data access
-- Format-agnostic data type mapping and conversion
-- Error handling and data validation across formats
-
-**Interfaces:** Provides standardized read/write API with format detection and uniform error handling.
-
-**Inspired by:** Low-level I/O routines for NetCDF/HDF5, parquet, csv under one API
-
-**Dependencies:** NetCDF, HDF5, and parquet libraries
-
----
-
-#### 2. fortsql
-
-**Purpose:** Database connectivity and SQL operations.
-
-**Features:**
-
-- Low-level SQL API for various databases (SQLite, PostgreSQL, MySQL)
-- Connection pooling and transaction management
-- Prepared statements and parameter binding
-- Result set iteration and type-safe data extraction
-
-**Interfaces:** Offers database-agnostic SQL execution API with connection management.
-
-**Inspired by:** Low-level SQL API for various databases
-
-**Dependencies:** Database-specific client libraries
-
----
-
-#### 3. fortplot
-
-**Purpose:** Scientific plotting and visualization.
-
-**Features:**
-
-- 2D/3D plotting with customizable styles and layouts
-- Statistical plots, histograms, and scientific visualizations
-- Export to various formats (PNG, PDF, SVG, EPS)
-
-**Interfaces:** Provides high-level plotting API with figure and axis management.
-
-**Inspired by:** matplotlib, pyplot-fortran, gnuplot, plotly
-
-**Dependencies:** Graphics libraries (Cairo, FreeType), optional LaTeX for typesetting
-
----
-
-#### 4. fortarray
+#### fortarray
 
 **Purpose:** Multi-dimensional array operations and data analysis.
 
@@ -229,7 +173,7 @@ The *lazy fortran* toolchain splits work across several packages: fortfront, flu
 
 ---
 
-#### 5. fortframe
+#### fortframe
 
 **Purpose:** Table-oriented data manipulation and analysis.
 
@@ -251,7 +195,7 @@ The *lazy fortran* toolchain splits work across several packages: fortfront, flu
 
 ---
 
-#### 6. fortfem
+#### fortfem
 
 **Purpose:** Finite element method computations.
 
@@ -270,9 +214,65 @@ The *lazy fortran* toolchain splits work across several packages: fortfront, flu
 
 ---
 
+#### fortio
+
+**Purpose:** Unified I/O interface for scientific data formats.
+
+**Features:**
+
+- Low-level I/O routines for NetCDF/HDF5, parquet, csv formats under one API
+- Memory-efficient streaming and chunked data access
+- Format-agnostic data type mapping and conversion
+- Error handling and data validation across formats
+
+**Interfaces:** Provides standardized read/write API with format detection and uniform error handling.
+
+**Inspired by:** Low-level I/O routines for NetCDF/HDF5, parquet, csv under one API
+
+**Dependencies:** NetCDF, HDF5, and parquet libraries
+
+---
+
+#### fortsql
+
+**Purpose:** Database connectivity and SQL operations.
+
+**Features:**
+
+- Low-level SQL API for various databases (SQLite, PostgreSQL, MySQL)
+- Connection pooling and transaction management
+- Prepared statements and parameter binding
+- Result set iteration and type-safe data extraction
+
+**Interfaces:** Offers database-agnostic SQL execution API with connection management.
+
+**Inspired by:** Low-level SQL API for various databases
+
+**Dependencies:** Database-specific client libraries
+
+---
+
+#### fortplot
+
+**Purpose:** Scientific plotting and visualization.
+
+**Features:**
+
+- 2D/3D plotting with customizable styles and layouts
+- Statistical plots, histograms, and scientific visualizations
+- Export to various formats (PNG, PDF, SVG, EPS)
+
+**Interfaces:** Provides high-level plotting API with figure and axis management.
+
+**Inspired by:** matplotlib, pyplot-fortran, gnuplot, plotly
+
+**Dependencies:** Graphics libraries (Cairo, FreeType), optional LaTeX for typesetting
+
+---
+
 #### Cthulhu Path of Madness
 
-#### 1. fortos
+#### fortos
 
 **Purpose:** Bootstrap Fortran and an operating system from machine language.
 
