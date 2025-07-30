@@ -1,7 +1,7 @@
 ## The Vision of *lazy fortran*
 **Make Python Fortran again!**
 
-**Disclaimer: This is an experimental work-in-progress project that is only partially implemented and where interfaces on all levels will undergo substantial changes.**
+**Disclaimer: This is an experimental work-in-progress programme that is only partially implemented and where interfaces on all levels will undergo substantial changes.**
 
 *lazy fortran* solves the two-language problem in Fortran by providing the experience and tooling of modern languages while maintaining, performance and long-term stability of Fortran. It is inspired by the best features of Python, Rust, Julia and Go, builds on the `fpm` ecosystem, and integrates with standard Fortran compilers and tools.
 
