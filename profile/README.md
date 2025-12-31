@@ -7,11 +7,13 @@
 
 ### Toolchain Overview
 
-The *lazy fortran* toolchain splits work across several packages: fortfront, fluff, ffc, fad, fortrun, and fnb — each focused on a clear purpose. This keeps code organized, dependencies minimal, and interfaces straightforward.
+The *lazy fortran* toolchain is being aligned with [LFortran](https://lfortran.org/). Core compiler functionality (type inference, formatting) will be contributed to LFortran's `--infer` and `--fmt` modes, while *lazy fortran* focuses on higher-level tooling built on top.
 
 ---
 
-#### fortrun
+#### fortrun *(on hold)*
+
+**Status:** On hold pending alignment with LFortran tooling.
 
 **Purpose:** Code runner and package manager.
 
@@ -34,28 +36,19 @@ The *lazy fortran* toolchain splits work across several packages: fortfront, flu
 
 ---
 
-#### fluff
+#### fluff *(retired)*
+
+**Status:** Retired in favor of [LFortran](https://lfortran.org/) `fmt` mode. LFortran provides a robust, trivia-preserving AST that enables proper source formatting while maintaining comments and whitespace.
 
 **Purpose:** Source-to-source transformations and static checks.
 
-**Features:**
-
-- Source code formatter for *lazy fortran* and Standard Fortran
-- Advanced linting with diagnostics (inspired by Rust analyzer)
-- Static analysis checks and code quality enforcement
-- Code transformations and refactoring suggestions
-
-**Interfaces:** Provides CLI subcommands for formatting, linting, and static analysis.
-
 **Inspired by:** ruff (code formatting and static analysis)
-
-**Dependencies:**
-
-- fortfront only
 
 ---
 
-#### fortnb
+#### fortnb *(on hold)*
+
+**Status:** On hold pending alignment with LFortran tooling.
 
 **Purpose:** Notebook interface for Standard Fortran and *lazy fortran*.
 
@@ -72,34 +65,22 @@ The *lazy fortran* toolchain splits work across several packages: fortfront, flu
 **Dependencies:**
 
 - fortrun for running notebook cells and managing cache
-- fluff CLI for formatting and standardization (optional)
-
-The *lazy fortran* toolchain splits work across several packages: fortfront, fluff, ffc, fad, fortrun, and fnb — each focused on a clear purpose. This keeps code organized, dependencies minimal, and interfaces straightforward.
 
 ---
 
-#### fortfc
+#### fortfc *(retired)*
+
+**Status:** Retired in favor of [LFortran](https://lfortran.org/) compiler. LFortran already provides a complete compilation pipeline from Fortran source to LLVM IR with excellent architecture.
 
 **Purpose:** Full compilation backend.
 
-**Features:**
-
-- Lower typed AST to HLFIR (an MLIR dialect)
-- Continue lowering to LLVM IR and produce object code
-- Includes the MLIR backend implementation
-
-**Interfaces:** Offers a compiler CLI to produce object code.
-
-**Inspired by:** flang (HLFIR -> FIR -> LLVM IR or SPIR-V for GPU -> OMP target), lfortran (typed AST -> LLVM IR)
-
-**Dependencies:**
-
-- fortfront for typed AST
-- LLVM/MLIR libraries
+**Inspired by:** flang, lfortran
 
 ---
 
-#### fortad
+#### fortad *(planned)*
+
+**Status:** Planned for future development.
 
 **Purpose:** Automatic differentiation.
 
@@ -107,17 +88,9 @@ The *lazy fortran* toolchain splits work across several packages: fortfront, flu
 
 - Supports `!$ad` annotations to mark functions/subroutines for differentiation
 - Integrates with Enzyme at the IR level during compilation
-- Works with any Enzyme-enabled compiler (ffc, Flang, etc.)
-- Details of IR integration to be defined
-
-**Interfaces:** Exposes compiler flags or annotations to enable AD on marked routines.
+- Works with any Enzyme-enabled compiler (Flang, LFortran, etc.)
 
 **Inspired by:** tapenade (decorators, e.g. !$ad mode=reverse)
-
-**Dependencies:**
-
-- fortfront for AST and semantic info
-- Any Enzyme-enabled Fortran compiler (ffc, Flang, LFortran, etc.)
 
 ---
 
@@ -152,7 +125,9 @@ The *lazy fortran* toolchain splits work across several packages: fortfront, flu
 
 ---
 
-#### fortarray
+#### fortarray *(planned)*
+
+**Status:** Planned for future development.
 
 **Purpose:** Multi-dimensional array operations and data analysis.
 
@@ -163,17 +138,13 @@ The *lazy fortran* toolchain splits work across several packages: fortfront, flu
 - Broadcasting, reduction, and transformation operations
 - Integration with fortio for data loading
 
-**Interfaces:** Exposes array API with method chaining for data manipulation and analysis.
-
-**Inspired by:** xarray/ndarray (load, aggregate, plot data with ds%plot(), ds%var%mean())
-
-**Dependencies:**
-
-- fortio for data I/O
+**Inspired by:** xarray/ndarray
 
 ---
 
-#### fortframe
+#### fortframe *(planned)*
+
+**Status:** Planned for future development.
 
 **Purpose:** Table-oriented data manipulation and analysis.
 
@@ -182,16 +153,8 @@ The *lazy fortran* toolchain splits work across several packages: fortfront, flu
 - pandas/excel-inspired interface using fortarray as backend
 - SQL integration through fortsql for database operations
 - Table joins, grouping, and aggregation operations
-- Import/export from various tabular formats
 
-**Interfaces:** Provides DataFrame-like API with SQL query capabilities and statistical methods.
-
-**Inspired by:** pandas (as fortarray backend but with SQL and table oriented)
-
-**Dependencies:**
-
-- fortarray for underlying array operations
-- fortsql for database connectivity
+**Inspired by:** pandas
 
 ---
 
@@ -214,7 +177,9 @@ The *lazy fortran* toolchain splits work across several packages: fortfront, flu
 
 ---
 
-#### fortio
+#### fortio *(planned)*
+
+**Status:** Planned for future development.
 
 **Purpose:** Unified I/O interface for scientific data formats.
 
@@ -223,17 +188,14 @@ The *lazy fortran* toolchain splits work across several packages: fortfront, flu
 - Low-level I/O routines for NetCDF/HDF5, parquet, csv formats under one API
 - Memory-efficient streaming and chunked data access
 - Format-agnostic data type mapping and conversion
-- Error handling and data validation across formats
 
-**Interfaces:** Provides standardized read/write API with format detection and uniform error handling.
-
-**Inspired by:** Low-level I/O routines for NetCDF/HDF5, parquet, csv under one API
-
-**Dependencies:** NetCDF, HDF5, and parquet libraries
+**Inspired by:** NetCDF/HDF5/parquet unified I/O
 
 ---
 
-#### fortsql
+#### fortsql *(planned)*
+
+**Status:** Planned for future development.
 
 **Purpose:** Database connectivity and SQL operations.
 
@@ -242,13 +204,8 @@ The *lazy fortran* toolchain splits work across several packages: fortfront, flu
 - Low-level SQL API for various databases (SQLite, PostgreSQL, MySQL)
 - Connection pooling and transaction management
 - Prepared statements and parameter binding
-- Result set iteration and type-safe data extraction
 
-**Interfaces:** Offers database-agnostic SQL execution API with connection management.
-
-**Inspired by:** Low-level SQL API for various databases
-
-**Dependencies:** Database-specific client libraries
+**Inspired by:** Low-level SQL APIs
 
 ---
 
@@ -272,7 +229,9 @@ The *lazy fortran* toolchain splits work across several packages: fortfront, flu
 
 #### Cthulhu Path of Madness
 
-#### fortos
+#### fortos *(planned)*
+
+**Status:** Planned for future development (experimental).
 
 **Purpose:** Bootstrap Fortran and an operating system from machine language.
 
@@ -281,13 +240,5 @@ The *lazy fortran* toolchain splits work across several packages: fortfront, flu
 - RISC-V architecture support with QEMU integration
 - Kernel development framework in Fortran
 - Hardware abstraction layer and device drivers
-- System call interface and memory management
-
-**Interfaces:** Provides OS development API with hardware abstraction and system service layers.
 
 **Inspired by:** stage0 (bootstrap compiler from binary and hex code on bare metal)
-
-**Dependencies:**
-
-- RISC-V toolchain
-- QEMU for emulation and testing
