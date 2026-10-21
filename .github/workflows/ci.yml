@@ -3,6 +3,7 @@ name: CI
 on:
   push:
     branches: [main]
+  merge_group:
   pull_request:
     branches: [main]
 
@@ -13,3 +14,9 @@ jobs:
       - uses: actions/checkout@v4
       - name: Validate README
         run: test -f profile/README.md && echo "README exists"
+  repo-hygiene:
+    uses: ./.github/workflows/repo-hygiene.yml
+    with:
+      hygiene-revision: ${{ github.sha }}
+    permissions:
+      contents: read
