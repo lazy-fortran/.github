@@ -242,3 +242,8 @@ The *lazy fortran* toolchain is being aligned with [LFortran](https://lfortran.o
 - Hardware abstraction layer and device drivers
 
 **Inspired by:** stage0 (bootstrap compiler from binary and hex code on bare metal)
+
+CI jobs are skipped on ordinary PR events before runner assignment. The merge
+queue validates the exact candidate with the required real checks. Explicit
+manual/full-ci requests and direct default-branch pushes also validate; pushes
+by `github-merge-queue[bot]` skip duplicate post-queue work.
